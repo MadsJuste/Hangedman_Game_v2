@@ -20,9 +20,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
             buttonY, buttonZ, buttonÆ,buttonØ, buttonÅ;
     private ImageView iw;
     private TextView tw ;
-    private TextView status;
     private TextView guesses;
-    private ListView listView;
     private HorizontalScrollView HSView;
     private LinearLayout linearLayout;
 
@@ -55,8 +53,9 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
 
+        guesses = (TextView) findViewById(R.id.LettersUsed);
         iw = (ImageView) findViewById(R.id.imageView2);
-        tw = (TextView) findViewById(R.id.textView2);
+        tw = (TextView) findViewById(R.id.WordToGuess);
         tw.setText(logic.getVisableWord());
 
 
@@ -71,9 +70,9 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         }else {
             logic.guessLetter(charecter);
             tw.setText(logic.getVisableWord());
-                /*if (!logic.isLastLetterCorrect()) {
+                if (!logic.isLastLetterCorrect()) {
                     guesses.setText(guesses.getText() + " " + charecter);
-                }*/
+                }
             if (logic.isTheGameWon()) {
                 tw.setText("You have guessed the word: " + logic.getWord() + " and won");
             }
