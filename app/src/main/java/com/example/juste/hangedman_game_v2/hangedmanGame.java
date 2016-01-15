@@ -13,6 +13,12 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class hangedmanGame extends AppCompatActivity implements View.OnClickListener {
     HangedmanLogic logic = new HangedmanLogic();
     private Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF,buttonG,buttonH, buttonI,buttonJ, buttonK, buttonL,
@@ -23,7 +29,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private TextView guesses;
     private HorizontalScrollView HSView;
     private LinearLayout linearLayout;
-
+    Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
             "o","p", "q","r", "s","t", "u","v","w", "x","y", "z", "æ","ø", "å"};
@@ -52,7 +58,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonP.setOnClickListener(this); buttonQ.setOnClickListener(this);buttonR.setOnClickListener(this);buttonS.setOnClickListener(this);buttonT.setOnClickListener(this);
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
-
+        myFBRef.child("Highscore").setValue("Score");
         guesses = (TextView) findViewById(R.id.LettersUsed);
         iw = (ImageView) findViewById(R.id.imageView2);
         tw = (TextView) findViewById(R.id.WordToGuess);
@@ -83,7 +89,10 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 iw.setImageResource(R.drawable.galge);
             }
             if (logic.isTheGameLost()) {
-               Intent gameLost = new Intent(this, GameIsLostActivity.class);
+
+                Map<String, Object> highscore = new HashMap<String, Object>();
+                highscore.put("score", logic.getScore());
+                Intent gameLost = new Intent(this, GameIsLostActivity.class);
                 gameLost.putExtra("word", logic.getWord());
                 gameLost.putExtra("score", logic.getScore());
                 startActivity(gameLost);
@@ -109,35 +118,66 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v==buttonA) {runGame(0);
-        }else if(v==buttonB){runGame(1);
-        }else if(v==buttonC){runGame(2);
-        }else if(v==buttonD){runGame(3);
-        }else if(v==buttonE){runGame(4);
-        }else if(v==buttonF){runGame(5);
-        }else if(v==buttonG){runGame(6);
-        }else if(v==buttonH){runGame(7);
-        }else if(v==buttonI){runGame(8);
-        }else if(v==buttonJ){runGame(9);
-        }else if(v==buttonK){runGame(10);
-        }else if(v==buttonL){runGame(11);
-        }else if(v==buttonM){runGame(12);
-        }else if(v==buttonN){runGame(13);
-        }else if(v==buttonO){runGame(14);
-        }else if(v==buttonP){runGame(15);
-        }else if(v==buttonQ){runGame(16);
-        }else if(v==buttonR){runGame(17);
-        }else if(v==buttonS){runGame(18);
-        }else if(v==buttonT){runGame(19);
-        }else if(v==buttonU){runGame(20);
-        }else if(v==buttonV){runGame(21);
-        }else if(v==buttonW){runGame(22);
-        }else if(v==buttonX){runGame(23);
-        }else if(v==buttonY){runGame(24);
-        }else if(v==buttonZ){runGame(25);
-        }else if(v==buttonÆ){runGame(26);
-        }else if(v==buttonØ){runGame(27);
-        }else if(v==buttonÅ){runGame(28);}
 
+        switch(v.getId()){
+            case R.id.A: runGame(0);
+                break;
+            case R.id.B: runGame(1);
+                break;
+            case R.id.C: runGame(2);
+                break;
+            case R.id.D: runGame(3);
+                break;
+            case R.id.E: runGame(4);
+                break;
+            case R.id.F: runGame(5);
+                break;
+            case R.id.G: runGame(6);
+                break;
+            case R.id.H: runGame(7);
+                break;
+            case R.id.I: runGame(8);
+                break;
+            case R.id.J: runGame(9);
+                break;
+            case R.id.K: runGame(10);
+                break;
+            case R.id.L: runGame(11);
+                break;
+            case R.id.M: runGame(12);
+                break;
+            case R.id.N: runGame(13);
+                break;
+            case R.id.O: runGame(14);
+                break;
+            case R.id.P: runGame(15);
+                break;
+            case R.id.Q: runGame(16);
+                break;
+            case R.id.R: runGame(17);
+                break;
+            case R.id.S: runGame(18);
+                break;
+            case R.id.T: runGame(19);
+                break;
+            case R.id.U: runGame(20);
+                break;
+            case R.id.V: runGame(21);
+                break;
+            case R.id.W: runGame(22);
+                break;
+            case R.id.X: runGame(23);
+                break;
+            case R.id.Y: runGame(24);
+                break;
+            case R.id.Z: runGame(25);
+                break;
+            case R.id.Æ: runGame(26);
+                break;
+            case R.id.Ø: runGame(27);
+                break;
+            case R.id.Å: runGame(28);
+                break;
+        }
     }
 }

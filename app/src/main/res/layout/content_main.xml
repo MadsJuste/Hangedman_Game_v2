@@ -19,65 +19,22 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/email_login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/UserButton"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:text="Create User"
+                android:textStyle="bold"
+                android:layout_below="@+id/Username"
+                android:layout_alignParentStart="true" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Play Anonymous"
                 android:id="@+id/anonButton"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/UserButton"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -93,15 +50,16 @@
                    \n 6) You'll get 100 points for a correct word
                    \n 7) You'll lost 10 points for a wrong letter"
                 android:id="@+id/WelcomeText"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/login_progress"
-                android:layout_marginTop="20dp" />
+                android:layout_below="@+id/anonButton"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true" />
 
-
-
-        </LinearLayout>
-    </ScrollView>
-
-
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Username"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
