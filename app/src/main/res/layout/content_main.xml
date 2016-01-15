@@ -71,33 +71,37 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Play Anonymous"
+                android:id="@+id/anonButton"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Hello and welcome to TheHangedman Game.\n These are the rules:
+                    \n 1) You will have an unknown word you'll have to guess.
+                   \n 2) You'll guess on one letter at a time.
+                   \n 3) If you guess wrong part of you will hang.
+                   \n 4) If all of you hang the game is over.
+                   \n 5) The game continues untill you hang.
+                   \n 6) You'll get 100 points for a correct word
+                   \n 7) You'll lost 10 points for a wrong letter"
+                android:id="@+id/WelcomeText"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/login_progress"
+                android:layout_marginTop="20dp" />
+
+
 
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Hello and welcome to TheHangedman Game.\n These are the rules:
-       \n 1) You will have an unknown word you'll have to guess.
-       \n 2) You'll guess on one letter at a time.
-       \n 3) If you guess wrong part of you will hang.
-       \n 4) If all of you hang the game is over.
-       \n 5) The game continues untill you hang.
-       \n 6) You'll get 100 points for a correct word
-       \n 7) You'll lost 10 points for a wrong letter"
-        android:id="@+id/WelcomeText"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/login_progress" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play Anonymous"
-        android:id="@+id/anonButton"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
