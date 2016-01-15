@@ -18,6 +18,7 @@ public class HangedmanLogic {
     private boolean LastLetterWasCorrect;
     private boolean gameIsWon;
     private boolean gameIsLost;
+    private int score;
 
 
     public ArrayList<String> getUsedLetter() {
@@ -52,6 +53,10 @@ public class HangedmanLogic {
         return gameIsLost || gameIsWon;
     }
 
+    public int getScore(){
+        return score;
+    }
+
 
     public HangedmanLogic() {
         possibleWord.add("car");
@@ -77,7 +82,25 @@ public class HangedmanLogic {
         gameIsLost = false;
         Word = possibleWord.get(new Random().nextInt(possibleWord.size()));
         updateVisableWord();
+        score = 0;
     }
+    public void softReset(){
+        UsedLetter.clear();
+        numberOfWrongWords = 0;
+        gameIsWon = false;
+        gameIsLost = false;
+        Word = possibleWord.get(new Random().nextInt(possibleWord.size()));
+        updateVisableWord();
+    }
+
+    public void plusPoints(){
+        score = score + 100;
+    }
+
+    public void minusPoints(){
+        score = score - 10;
+    }
+
 
 
     private void updateVisableWord() {
@@ -124,6 +147,7 @@ public class HangedmanLogic {
         System.out.println("- visable word = " + visableWord);
         System.out.println("- wrong letter = " + numberOfWrongWords);
         System.out.println("- used letters = " + UsedLetter);
+        System.out.println("- score is = " + score);
         if (gameIsLost) System.out.println("- Game is Lost");
         if (gameIsWon) System.out.println("- Game is Won");
         System.out.println("---------- ");

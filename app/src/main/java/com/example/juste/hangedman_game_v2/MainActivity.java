@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import com.example.juste.hangedman_game_v2.HangedmanLogic;
 import com.example.juste.hangedman_game_v2.R;
 import com.example.juste.hangedman_game_v2.hangedmanGame;
-import com.firebase.client.Firebase;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Firebase.setAndroidContext(this);
-        Firebase myFirebaseRef = new Firebase("https://hangedman-game.firebaseio.com/");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

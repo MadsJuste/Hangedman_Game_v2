@@ -57,6 +57,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         iw = (ImageView) findViewById(R.id.imageView2);
         tw = (TextView) findViewById(R.id.WordToGuess);
         tw.setText(logic.getVisableWord());
+        iw.setImageResource(R.drawable.galge);
 
 
 
@@ -72,12 +73,20 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
             tw.setText(logic.getVisableWord());
                 if (!logic.isLastLetterCorrect()) {
                     guesses.setText(guesses.getText() + " " + charecter);
+                    logic.minusPoints();
                 }
             if (logic.isTheGameWon()) {
-                tw.setText("You have guessed the word: " + logic.getWord() + " and won");
+                tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points");
+                logic.softReset();
+                logic.plusPoints();
+                guesses.setText("Letters Used: ");
+                iw.setImageResource(R.drawable.galge);
             }
             if (logic.isTheGameLost()) {
-                tw.setText("You have failed to guess the word: " + logic.getWord() + " and lost");
+               Intent gameLost = new Intent(this, GameIsLostActivity.class);
+                gameLost.putExtra("word", logic.getWord());
+                gameLost.putExtra("score", logic.getScore());
+                startActivity(gameLost);
             }
             logic.logStatus();
         }
