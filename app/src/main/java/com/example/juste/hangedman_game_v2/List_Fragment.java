@@ -1,0 +1,57 @@
+package com.example.juste.hangedmangame;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.example.juste.hangedman_game_v2.R;
+
+import java.util.ArrayList;
+
+
+/**
+ * Created by Konstantin on 17-01-2016.
+ */
+public class List_Fragment extends Fragment {
+    ListView listView;
+    ArrayList<String> drList;
+    OnDRListener dCallBack;
+
+    // Interface til callback kommunikation til fragmentet
+    public interface OnDRListener{
+        public void onDRListener();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        // Sikrer at aktiviteten der skal callbackes fra har implementeret interface
+        try{
+            dCallBack = (OnDRListener) getActivity();
+        }
+        catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " skal implementere OnDRListener");
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View drFragmentView = inflater.inflate(R.layout.list_fragment, container, false);
+        dCallBack.onDRListener();
+        listView = (ListView) drFragmentView.findViewById(R.id.drlisteview);
+        listView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                android.R.layout.simple_list_item_1 , android.R.id.text1, drList));
+        return drFragmentView;
+    }
+
+    // Metode til fragmentcontroller for at give fragmentet en arrayliste af ord
+    public void populateDrList(ArrayList<String> list){
+        drList = list;
+    }
+}
