@@ -1,4 +1,4 @@
-package com.example.juste.hangedmangame;
+package com.example.juste.hangedman_game_v2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +21,7 @@ public class List_Fragment extends Fragment {
     ArrayList<String> drList;
     OnDRListener dCallBack;
 
-    // Interface til callback kommunikation til fragmentet
+    // Interface to callback communication to fragments
     public interface OnDRListener{
         public void onDRListener();
     }
@@ -36,7 +36,7 @@ public class List_Fragment extends Fragment {
         }
         catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
-                    + " skal implementere OnDRListener");
+                    + " shall implements In DR Listener");
         }
     }
 

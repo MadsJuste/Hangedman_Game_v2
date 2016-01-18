@@ -69,6 +69,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
     }
     public void runGame(int i){
+        long timer = -System.currentTimeMillis();
         String charecter;
         nummer=i;
         charecter = alfabet[nummer];
@@ -98,7 +99,10 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 startActivity(gameLost);
             }
             logic.logStatus();
+            timer += System.currentTimeMillis();
+            System.out.println("hangedGame.runGame() " + timer);
         }
+
         switch(logic.getNumberOfWrongWords()){
             case 1 : iw.setImageResource(R.drawable.forkert1);
                 break;
