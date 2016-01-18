@@ -22,7 +22,7 @@ public class HangedmanLogic {
     public int gameWon=0;
     public int  gameLost=0;
     public int totalGame=0;
-    public long timePlay=0;
+    public int timePlay=0;
 
     hangedmanGame game = new hangedmanGame();
 
@@ -225,6 +225,10 @@ public class HangedmanLogic {
         }
         return totalGame;
     }
-
+public int AverageTime() {
+   int i= (int) game.timer/1000/TotalStat();
+           timePlay=i;
+    return timePlay;
+}
 
 }
