@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Konstantin on 17-01-2016.
  */
-public class List_Fragment extends Fragment {
+public class DR_List_Fragment extends Fragment {
     ListView listView;
     ArrayList<String> drList;
     OnDRListener dCallBack;

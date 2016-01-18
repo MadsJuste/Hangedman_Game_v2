@@ -24,6 +24,8 @@ public class HangedmanLogic {
     public int totalGame=0;
     public long timePlay=0;
 
+    hangedmanGame game = new hangedmanGame();
+
 
     public ArrayList<String> getUsedLetter() {
         return UsedLetter;

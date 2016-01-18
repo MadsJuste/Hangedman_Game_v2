@@ -31,6 +31,8 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private LinearLayout linearLayout;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
+    long timer = -System.currentTimeMillis();
+
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
             "o","p", "q","r", "s","t", "u","v","w", "x","y", "z", "æ","ø", "å"};
     @Override
@@ -69,7 +71,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
     }
     public void runGame(int i){
-        long timer = -System.currentTimeMillis();
+
         String charecter;
         nummer=i;
         charecter = alfabet[nummer];
