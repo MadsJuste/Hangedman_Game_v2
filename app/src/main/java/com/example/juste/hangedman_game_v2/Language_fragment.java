@@ -1,6 +1,7 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +19,10 @@ public class Language_fragment extends Fragment implements View.OnClickListener{
     private Button btnEn;
     private Button btnDk;
     private Text txttxt;
+    HangedmanLogic logic = new HangedmanLogic();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.language_choice, container, false);
         Log.d("language_fragment", "fragmentet blev vist!");
         btnDk = (Button) view.findViewById(R.id.btnDk);
@@ -31,9 +34,51 @@ public class Language_fragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    public void getWordDR ()  {
+
+
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object... arg0) {
+                try {
+                    logic.getWordFromDR();
+                    return "Words picked up properly from DR";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Words are not picked up properly from DR: " + e;
+                }
+            }
+
+
+        }.execute();
+    }
+
+    public void getWordGuardian ()  {
+
+
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object... arg0) {
+                try {
+                    logic.getWordFromTimes();
+                    return "Words picked up properly from Times";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Words are not picked up properly from Times: " + e;
+                }
+            }
+
+
+        }.execute();
+    }
 
     @Override
     public void onClick(View v) {
-
+if (v==btnDk) {
+   getWordDR();
+}
+        else {
+            getWordGuardian();
+        }
     }
 }

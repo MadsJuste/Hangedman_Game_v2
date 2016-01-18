@@ -231,4 +231,11 @@ public int AverageTime() {
     return timePlay;
 }
 
+    public void ResetStat (){
+        gameWon=0;
+        gameLost=0;
+        totalGame=0;
+        timePlay=0;
+    }
+
 }

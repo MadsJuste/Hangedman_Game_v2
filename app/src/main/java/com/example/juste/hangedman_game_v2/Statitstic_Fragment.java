@@ -24,18 +24,22 @@ public class Statitstic_Fragment extends Fragment {
     public EditText edtxtTime;
     public Button btnReset;
     HangedmanLogic logic = new HangedmanLogic();
-    hangedmanGame game = new hangedmanGame();
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View statisticFragmentView = inflater.inflate(R.layout.statistik_fragment, container, false);
         edtxtWon.setText(logic.WonStat());
         edtxtLost.setText(logic.LostStat());
         edtxtPlayed.setText(logic.TotalStat());
-        edtxtTime.setText(game.timer);
+        edtxtTime.setText(logic.AverageTime());
 
         return statisticFragmentView;
     }
 
-
+public void onClick(View v){
+    if (v==btnReset){
+        logic.ResetStat();
+    }
+}
 
 }
