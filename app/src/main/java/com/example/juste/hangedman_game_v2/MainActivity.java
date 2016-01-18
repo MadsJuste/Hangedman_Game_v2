@@ -84,11 +84,22 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_playgame) {
             startActivity(new Intent(this, hangedmanGame.class));
-        } else if (id == R.id.nav_highscore) {
-            startActivity(new Intent(this, StatsActivity.class));
-        } else if (id == R.id.nav_language) {
 
+        } else if (id == R.id.nav_highscore) {
+            startActivity(new Intent(this, Statitstic_Fragment.class));
+
+        } else if (id == R.id.nav_language) {
+            startActivity(new Intent(this, Language_fragment.class));
         }
+
+            else if (id==R.id.nav_list){
+                startActivity ( new Intent (this, DR_List_Fragment.class));
+            }
+        else if (id == R.id.nav_manage) {
+            System.out.println("Not created");
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

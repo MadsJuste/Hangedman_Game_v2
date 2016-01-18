@@ -17,6 +17,8 @@
         <item
             android:id="@+id/nav_list"
             android:title="Words list" />
+
+
     </group>
 
 </menu>
