@@ -30,6 +30,7 @@ public class SensorActivity implements SensorEventListener {
     private long mLastShake;
     private long mLastForce;
 
+
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -77,9 +78,9 @@ public class SensorActivity implements SensorEventListener {
 
     public void onAccuracyChanged(int sensor, int accuracy) { }
 
-    public void onSensorChanged(int sensor, float[] values)
+    public boolean onSensorChanged(int sensor, float[] values, SensorEvent event )
     {
-        if (sensor != SensorManager.SENSOR_ACCELEROMETER) return;
+        if (sensor != SensorManager.SENSOR_ACCELEROMETER) return false;
         long now = System.currentTimeMillis();
 
         if ((now - mLastForce) > SHAKE_TIMEOUT) {
@@ -104,6 +105,13 @@ public class SensorActivity implements SensorEventListener {
             mLastY = values[SensorManager.DATA_Y];
             mLastZ = values[SensorManager.DATA_Z];
         }
+return true;
     }
-
+    /* how imagin  for hangedmanGame class
+    SensorACtivity sensor = new  SensorActivity();
+    If (sensor.onSensorChanged =true) {
+        logic.refresh();
+        else {
+            runGame (int i).................... }
+    */
 }
