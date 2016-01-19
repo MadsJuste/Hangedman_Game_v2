@@ -68,8 +68,10 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
            Log.d("WHAT THE HELL", "WTH");
         }else if(language.equals("english")){
             getWordGuardian();
+            tw.setText(logic.getVisableWord());
         }else if(language.equals("danish")){
             getWordDR();
+            tw.setText(logic.getVisableWord());
         }
     }
 
