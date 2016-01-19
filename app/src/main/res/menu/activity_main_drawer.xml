@@ -9,6 +9,9 @@
             android:id="@+id/nav_highscore"
             android:title="Highscore" />
         <item
+            android:id="@+id/nav_statistics"
+            android:title="Statistics" />
+        <item
             android:id="@+id/nav_language"
             android:title="Language" />
         <item
