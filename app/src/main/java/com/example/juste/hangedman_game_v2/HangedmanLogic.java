@@ -19,6 +19,12 @@ public class HangedmanLogic {
     private boolean gameIsWon;
     private boolean gameIsLost;
     private int score;
+    public int gameWon=0;
+    public int  gameLost=0;
+    public int totalGame=0;
+    public int timePlay=0;
+
+   // hangedmanGame game = new hangedmanGame();
 
 
     public ArrayList<String> getUsedLetter() {
@@ -181,4 +187,54 @@ public class HangedmanLogic {
         System.out.println("possible Word = " + possibleWord);
         refresh();
     }
+
+    public void getWordFromTimes() throws Exception {
+        String data = getUrl("http://www.thetimes.co.uk/tto/news/");
+        System.out.println("data = " + data);
+        data = data.substring(data.indexOf("<body")).
+                replaceAll("<.+?>", " ").toLowerCase().replaceAll("<[^>]+>"," "). // tilføjet lidt tagremoval
+                replaceAll("[^a-zæøå]", " ").
+                replaceAll(" [a-zæøå] "," "). // fjern 1-Lettersord
+                replaceAll(" [a-zæøå][a-zæøå] "," "); // fjern 2-Lettersord
+
+        System.out.println("data = " + data);
+        possibleWord.clear();
+        possibleWord.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
+
+        System.out.println("possible Word = " + possibleWord);
+        refresh();
+    }
+
+    public int WonStat() {
+        if (isTheGameWon()) {
+           gameWon++;
+        }
+        return gameWon;
+    }
+
+    public int LostStat() {
+        if (isTheGameLost()) {
+            gameLost++;
+        }
+        return gameLost;
+    }
+
+    public int TotalStat() {
+        if (isTheGameWon() || isTheGameLost()) {
+            totalGame=gameLost+gameWon;
+        }
+        return totalGame;
+    }
+ //public int AverageTime() {
+  // int i= (int) game.timer/1000/TotalStat();
+   //        timePlay=i;
+  //  return timePlay;}
+
+    public void ResetStat (){
+        gameWon=0;
+        gameLost=0;
+        totalGame=0;
+        timePlay=0;
+    }
+
 }

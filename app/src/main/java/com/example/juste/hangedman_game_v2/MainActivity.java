@@ -96,7 +96,17 @@ public class MainActivity extends AppCompatActivity
             Intent stats = new Intent(this, StatsActivity.class);
             startActivity(stats);
         } else if (id == R.id.nav_language) {
+            startActivity(new Intent(this, Language_fragment.class));
+        }
 
+            else if (id==R.id.nav_list){
+                startActivity ( new Intent (this, DR_List_Fragment.class));
+            }
+        else if (id == R.id.nav_manage) {
+            System.out.println("Not created");
+        }
+        else if (id == R.id.nav_test) {
+            System.out.println( new Intent (this, Test_Activity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

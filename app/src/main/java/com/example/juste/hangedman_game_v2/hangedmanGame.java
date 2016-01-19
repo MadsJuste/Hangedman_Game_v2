@@ -25,6 +25,8 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private String name;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
+    long timer = -System.currentTimeMillis();
+
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
             "o","p", "q","r", "s","t", "u","v","w", "x","y", "z", "æ","ø", "å"};
     @Override
@@ -65,6 +67,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
     }
     public void runGame(int i){
+
         String charecter;
         nummer=i;
         charecter = alfabet[nummer];
@@ -97,7 +100,10 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 startActivity(gameLost);
             }
             logic.logStatus();
+            timer += System.currentTimeMillis();
+            System.out.println("hangedGame.runGame() " + timer);
         }
+
         switch(logic.getNumberOfWrongWords()){
             case 1 : iw.setImageResource(R.drawable.forkert1);
                 break;
