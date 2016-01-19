@@ -1,6 +1,10 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class hangedmanGame extends AppCompatActivity implements View.OnClickListener {
+public class hangedmanGame extends AppCompatActivity implements View.OnClickListener{
+
     HangedmanLogic logic = new HangedmanLogic();
+
+
+
+
     private Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF,buttonG,buttonH, buttonI,buttonJ, buttonK, buttonL,
             buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT, buttonU, buttonV, buttonW, buttonX,
             buttonY, buttonZ, buttonÆ,buttonØ, buttonÅ;
@@ -25,7 +34,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private String name;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
-    String language = "none";;
+    String language = "none";
     long timer = -System.currentTimeMillis();
 
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
@@ -98,7 +107,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 }
                 if (logic.isTheGameLost()) {
                     String push = "" + logic.getScore();
-                    Map<String, String> highscore = new HashMap<String, String>();
+                    Map<String, String> highscore = new HashMap<>();
                     highscore.put("score", push);
                     highscore.put("name", name);
                     myFBRef.push().setValue(highscore);
@@ -247,5 +256,6 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
         }.execute();
     }
+
 
 }
