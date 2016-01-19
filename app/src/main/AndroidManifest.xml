@@ -29,10 +29,18 @@
             android:name=".hangedmanGame"
             android:label="Hangedman_Game_v2" />
         <activity
-            android:name=".StatsActivity"
+            android:name=".Statistic_Activity"
             android:label="@string/title_activity_stats"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GameIsLostActivity" />
+        <activity
+            android:name=".Language_fragment"
+            android:label="Language Choice" />
+
+        <activity
+            android:name=".Test_Activity"
+            android:label="Test" />
+
     </application>
 
 </manifest>

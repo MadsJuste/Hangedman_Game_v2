@@ -24,7 +24,7 @@ public class HangedmanLogic {
     public int totalGame=0;
     public int timePlay=0;
 
-    hangedmanGame game = new hangedmanGame();
+   // hangedmanGame game = new hangedmanGame();
 
 
     public ArrayList<String> getUsedLetter() {
@@ -225,11 +225,10 @@ public class HangedmanLogic {
         }
         return totalGame;
     }
-public int AverageTime() {
-   int i= (int) game.timer/1000/TotalStat();
-           timePlay=i;
-    return timePlay;
-}
+ //public int AverageTime() {
+  // int i= (int) game.timer/1000/TotalStat();
+   //        timePlay=i;
+  //  return timePlay;}
 
     public void ResetStat (){
         gameWon=0;

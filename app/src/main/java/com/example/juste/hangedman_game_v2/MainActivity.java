@@ -1,7 +1,6 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -10,14 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.juste.hangedman_game_v2.HangedmanLogic;
-import com.example.juste.hangedman_game_v2.R;
-import com.example.juste.hangedman_game_v2.hangedmanGame;
 import com.firebase.client.Firebase;
 
 
@@ -86,7 +81,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, hangedmanGame.class));
 
         } else if (id == R.id.nav_highscore) {
-            startActivity(new Intent(this, Statitstic_Fragment.class));
+            startActivity(new Intent(this, Statistic_Activity.class));
 
         } else if (id == R.id.nav_language) {
             startActivity(new Intent(this, Language_fragment.class));
@@ -98,8 +93,9 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_manage) {
             System.out.println("Not created");
         }
-
-
+        else if (id == R.id.nav_test) {
+            System.out.println( new Intent (this, Test_Activity.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

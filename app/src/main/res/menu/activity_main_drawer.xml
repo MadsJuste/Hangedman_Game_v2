@@ -17,6 +17,10 @@
         <item
             android:id="@+id/nav_list"
             android:title="Words list" />
+        <item
+            android:id="@+id/nav_test"
+            android:title="test" />
+
 
 
     </group>

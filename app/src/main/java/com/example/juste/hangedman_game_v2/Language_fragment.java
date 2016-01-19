@@ -3,6 +3,7 @@ package com.example.juste.hangedman_game_v2;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +15,27 @@ import org.w3c.dom.Text;
 /**
  * Created by Konstantin on 17-01-2016.
  */
-public class Language_fragment extends Fragment implements View.OnClickListener{
+public class Language_fragment extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnEn;
     private Button btnDk;
     private Text txttxt;
     HangedmanLogic logic = new HangedmanLogic();
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.language_choice, container, false);
+        setContentView(R.layout.language_choice);
+       // View view = inflater.inflate(R.layout.language_choice, container, false);
         Log.d("language_fragment", "fragmentet blev vist!");
-        btnDk = (Button) view.findViewById(R.id.btnDk);
+        btnDk = (Button) findViewById(R.id.btnDk);
         btnDk.setOnClickListener(this);
-        btnEn = (Button) view.findViewById(R.id.btnEn);
+        btnEn = (Button) findViewById(R.id.btnEn);
         btnEn.setOnClickListener(this);
 
 
-        return view;
+
+
+
     }
 
     public void getWordDR ()  {
