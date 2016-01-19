@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
@@ -19,7 +20,7 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
 
     private Button btnEn;
     private Button btnDk;
-    private Text txttxt;
+    private TextView txttxt;
     HangedmanLogic logic = new HangedmanLogic();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
         btnDk.setOnClickListener(this);
         btnEn = (Button) findViewById(R.id.btnEn);
         btnEn.setOnClickListener(this);
+        txttxt = (TextView) findViewById(R.id.txttxt);
 
 
 
@@ -53,6 +55,14 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
                 }
             }
 
+                @Override
+                protected void onPostExecute(Object resultat) {
+                    Log.d("fra DR", "resultat: \n" + resultat);
+                    txttxt.setText(logic.getVisableWord());
+
+                }
+
+
 
         }.execute();
     }
@@ -73,8 +83,17 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
             }
 
 
-        }.execute();
-    }
+         @Override
+        protected void onPostExecute(Object resultat) {
+            Log.d("from Guardian", "resultat: \n" + resultat);
+            txttxt.setText(logic.getVisableWord());
+
+        }
+
+
+
+    }.execute();
+}
 
     @Override
     public void onClick(View v) {
