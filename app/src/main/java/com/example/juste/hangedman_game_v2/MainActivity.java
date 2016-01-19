@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     private Button anon;
     private EditText userName;
     private String name;
+    private String langauge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         anon.setOnClickListener(this);
         userName = (EditText) findViewById(R.id.Username);
         name = "ERROR";
+        langauge = getIntent().getStringExtra("message");
 
     }
 
@@ -86,9 +88,14 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_playgame) {
             if(name.equals("ERROR")){
                 userName.setText("Please choose to make a user or play Anon");
-            }else{
+            }else if(langauge.equals(null)){
                 Intent gameStart = new Intent(this, hangedmanGame.class);
                 gameStart.putExtra("name", name);
+                startActivity(gameStart);
+            }else if(!langauge.equals(null)){
+                Intent gameStart = new Intent(this, hangedmanGame.class);
+                gameStart.putExtra("name", name);
+                gameStart.putExtra("langauge", langauge);
                 startActivity(gameStart);
             }
 
@@ -97,15 +104,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(stats);
         } else if (id == R.id.nav_language) {
             startActivity(new Intent(this, Language_fragment.class));
-        }
-
-            else if (id==R.id.nav_list){
-                startActivity ( new Intent (this, DR_List_Fragment.class));
-            }
-        else if (id == R.id.nav_manage) {
+        } else if (id==R.id.nav_list){
+            startActivity ( new Intent (this, DR_List_Fragment.class));
+        } else if (id == R.id.nav_manage) {
             System.out.println("Not created");
-        }
-        else if (id == R.id.nav_test) {
+        } else if (id == R.id.nav_test) {
             System.out.println( new Intent (this, Test_Activity.class));
         }
 

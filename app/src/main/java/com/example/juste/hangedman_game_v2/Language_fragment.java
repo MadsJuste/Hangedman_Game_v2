@@ -1,6 +1,7 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
     private Button btnDk;
     private TextView txttxt;
     HangedmanLogic logic = new HangedmanLogic();
-
+    String botPressed;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.language_choice);
@@ -34,74 +35,21 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
         btnEn.setOnClickListener(this);
         txttxt = (TextView) findViewById(R.id.txttxt);
 
-
-
-
-
     }
-
-    public void getWordDR ()  {
-
-
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object... arg0) {
-                try {
-                    logic.getWordFromDR();
-                    return "Words picked up properly from DR";
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return "Words are not picked up properly from DR: " + e;
-                }
-            }
-
-                @Override
-                protected void onPostExecute(Object resultat) {
-                    Log.d("fra DR", "resultat: \n" + resultat);
-                    txttxt.setText(logic.getVisableWord());
-
-                }
-
-
-
-        }.execute();
-    }
-
-    public void getWordGuardian ()  {
-
-
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object... arg0) {
-                try {
-                    logic.getWordFromTimes();
-                    return "Words picked up properly from Times";
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return "Words are not picked up properly from Times: " + e;
-                }
-            }
-
-
-         @Override
-        protected void onPostExecute(Object resultat) {
-            Log.d("from Guardian", "resultat: \n" + resultat);
-            txttxt.setText(logic.getVisableWord());
-
-        }
-
-
-
-    }.execute();
-}
 
     @Override
     public void onClick(View v) {
-if (v==btnDk) {
-   getWordDR();
-}
+        if (v==btnDk) {
+            botPressed = "danish";
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("message", botPressed);
+            startActivity(intent);
+        }
         else {
-            getWordGuardian();
+             botPressed = "english";
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("message", botPressed);
+            startActivity(intent);
         }
     }
 }

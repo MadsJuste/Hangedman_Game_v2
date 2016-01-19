@@ -51,7 +51,6 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
                 Map<String, Integer> map = sortByValues((HashMap) highscoreList);
                 names = new ArrayList<String>(map.keySet());
                 score = new ArrayList<Integer>(map.values());
-                run();
             }
 
             @Override
@@ -62,24 +61,22 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
 
 
 
+
     }
     @Override
     public void run() {
-
-        stats = new ListView(this);
-        stats.setOnItemClickListener(this);
+       stats = new ListView(this);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.content_stats, R.id.list_name,names){
             @Override
             public View getView(int position, View cachedView, ViewGroup parent){
                 View view = super.getView(position, cachedView, parent);
-
                 TextView list_score = (TextView) view.findViewById(R.id.list_score);
                 list_score.setText(score.get(position).toString());
-
                 return view;
             }};
         stats.setAdapter(adapter);
         setContentView(stats);
+        stats.setOnItemClickListener(this);
 
     }
 
@@ -87,8 +84,8 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
     private static HashMap sortByValues(HashMap map) {
         List list = new LinkedList(map.entrySet());
         Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+            public int compare(Object o2, Object o1) {
+                return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
             }
         });
         HashMap sortedHashMap = new LinkedHashMap();

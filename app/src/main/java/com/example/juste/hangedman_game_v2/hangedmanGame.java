@@ -1,13 +1,13 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.firebase.client.Firebase;
 import java.util.HashMap;
@@ -25,6 +25,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private String name;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
+    String language = "none";;
     long timer = -System.currentTimeMillis();
 
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
@@ -61,69 +62,77 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         tw.setText(logic.getVisableWord());
         iw.setImageResource(R.drawable.galge);
         name = getIntent().getStringExtra("name");
-
-
-
-
+        language = getIntent().getStringExtra("langauge");
+        Log.d("String", "langauge ="+language + " name ="+name);
+        if (language.equals("danish")) {
+            getWordDR();
+        }else if(language.equals("english")){
+            getWordGuardian();
+        }
     }
-    public void runGame(int i){
 
+
+
+    public void runGame(int i){
         String charecter;
-        nummer=i;
+        nummer = i;
         charecter = alfabet[nummer];
-        if(logic.getUsedLetter().contains(charecter)){
-            tw.setText("you have already guessed on this letter");
-        }else {
-            logic.guessLetter(charecter);
-            tw.setText(logic.getVisableWord());
+                if (logic.getUsedLetter().contains(charecter)) {
+                    tw.setText("you have already guessed on this letter");
+                } else {
+                logic.guessLetter(charecter);
+                tw.setText(logic.getVisableWord());
                 if (!logic.isLastLetterCorrect()) {
                     guesses.setText(guesses.getText() + " " + charecter);
                     logic.minusPoints();
                 }
-            if (logic.isTheGameWon()) {
-                tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points");
-                logic.softReset();
-                logic.plusPoints();
-                guesses.setText("Letters Used: ");
-                iw.setImageResource(R.drawable.galge);
+                if (logic.isTheGameWon()) {
+                    tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points");
+                    logic.softReset();
+                    logic.plusPoints();
+                    guesses.setText("Letters Used: ");
+                    iw.setImageResource(R.drawable.galge);
+                }
+                if (logic.isTheGameLost()) {
+                    String push = "" + logic.getScore();
+                    Map<String, String> highscore = new HashMap<String, String>();
+                    highscore.put("score", push);
+                    highscore.put("name", name);
+                    myFBRef.push().setValue(highscore);
+                    Intent gameLost = new Intent(this, GameIsLostActivity.class);
+                    gameLost.putExtra("word", logic.getWord());
+                    gameLost.putExtra("score", logic.getScore());
+                    startActivity(gameLost);
+                }
+                logic.logStatus();
+                /*timer += System.currentTimeMillis();
+                System.out.println("hangedGame.runGame() " + timer);*/
             }
-            if (logic.isTheGameLost()) {
-                String push = ""+logic.getScore();
-                Map<String, String> highscore = new HashMap<String, String>();
-                highscore.put("score", push);
-                highscore.put("name", name);
-                myFBRef.push().setValue(highscore);
-                String postID = myFBRef.getKey();
-                Intent gameLost = new Intent(this, GameIsLostActivity.class);
-                gameLost.putExtra("word", logic.getWord());
-                gameLost.putExtra("score", logic.getScore());
-                startActivity(gameLost);
-            }
-            logic.logStatus();
-            timer += System.currentTimeMillis();
-            System.out.println("hangedGame.runGame() " + timer);
+        switch(logic.getNumberOfWrongWords()) {
+            case 1:
+                iw.setImageResource(R.drawable.forkert1);
+                break;
+            case 2:
+                iw.setImageResource(R.drawable.forkert2);
+                break;
+            case 3:
+                iw.setImageResource(R.drawable.forkert3);
+                break;
+            case 4:
+                iw.setImageResource(R.drawable.forkert4);
+                break;
+            case 5:
+                iw.setImageResource(R.drawable.forkert5);
+                break;
+            case 6:
+                iw.setImageResource(R.drawable.forkert6);
+                break;
+
         }
 
-        switch(logic.getNumberOfWrongWords()){
-            case 1 : iw.setImageResource(R.drawable.forkert1);
-                break;
-            case 2 : iw.setImageResource(R.drawable.forkert2);
-                break;
-            case 3 : iw.setImageResource(R.drawable.forkert3);
-                break;
-            case 4 : iw.setImageResource(R.drawable.forkert4);
-                break;
-            case 5 : iw.setImageResource(R.drawable.forkert5);
-                break;
-            case 6 : iw.setImageResource(R.drawable.forkert6);
-                break;
-
-        }
     }
-
     @Override
     public void onClick(View v) {
-
         switch(v.getId()){
             case R.id.A: runGame(0);
                 break;
@@ -185,4 +194,54 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
+
+    public void getWordDR ()  {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object... arg0) {
+                try {
+                    logic.getWordFromDR();
+                    return "Words picked up properly from DR";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Words are not picked up properly from DR: " + e;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resultat) {
+                Log.d("fra DR", "resultat: \n" + resultat);
+            }
+
+
+
+        }.execute();
+    }
+
+    public void getWordGuardian ()  {
+
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object... arg0) {
+                try {
+                    logic.getWordFromTimes();
+                    return "Words picked up properly from Times";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Words are not picked up properly from Times: " + e;
+                }
+            }
+
+
+            @Override
+            protected void onPostExecute(Object resultat) {
+                Log.d("from Guardian", "resultat: \n" + resultat);
+            }
+
+
+
+        }.execute();
+    }
+
 }
