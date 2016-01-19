@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_playgame) {
             if(name.equals("ERROR")){
                 userName.setText("Please choose to make a user or play Anon");
-            }else if(langauge.equals(null)){
+            }else if(langauge==null){
                 Intent gameStart = new Intent(this, hangedmanGame.class);
                 gameStart.putExtra("name", name);
                 startActivity(gameStart);
-            }else if(!langauge.equals(null)){
+            }else if(langauge != null){
                 Intent gameStart = new Intent(this, hangedmanGame.class);
                 gameStart.putExtra("name", name);
                 gameStart.putExtra("langauge", langauge);
@@ -104,13 +104,13 @@ public class MainActivity extends AppCompatActivity
             startActivity(stats);
         } else if (id == R.id.nav_language) {
             startActivity(new Intent(this, Language_fragment.class));
-        } else if (id==R.id.nav_list){
+        }/* else if (id==R.id.nav_list){
             startActivity ( new Intent (this, DR_List_Fragment.class));
         } else if (id == R.id.nav_manage) {
             System.out.println("Not created");
         } else if (id == R.id.nav_test) {
             System.out.println( new Intent (this, Test_Activity.class));
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

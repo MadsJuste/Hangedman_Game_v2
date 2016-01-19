@@ -32,7 +32,7 @@ public class GameIsLostActivity extends hangedmanGame implements View.OnClickLis
 
     public void onClick(View v){
         if(v==returnToMain) {
-            Intent backToMain = new Intent(GameIsLostActivity.this, MainActivity.class);
+            Intent backToMain = new Intent(this, MainActivity.class);
             backToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(backToMain);
         }

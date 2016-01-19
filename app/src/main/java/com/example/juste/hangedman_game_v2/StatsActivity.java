@@ -46,11 +46,16 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postsnapshot : snapshot.getChildren()) {
                     UserLogic userlogic = postsnapshot.getValue(UserLogic.class);
-                    highscoreList.put(userlogic.getName(), userlogic.getScore());
+                    if(highscoreList.containsKey(userlogic.getName())&& highscoreList.get(userlogic.getName())>userlogic.getScore()){
+                        Log.d("wrong wrong", "set the highest player");
+                    }else{highscoreList.put(userlogic.getName(), userlogic.getScore());}
                 }
                 Map<String, Integer> map = sortByValues((HashMap) highscoreList);
                 names = new ArrayList<String>(map.keySet());
                 score = new ArrayList<Integer>(map.values());
+                Collections.reverse(names);
+                Collections.reverse(score);
+                run();
             }
 
             @Override
@@ -65,7 +70,6 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
     }
     @Override
     public void run() {
-       stats = new ListView(this);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.content_stats, R.id.list_name,names){
             @Override
             public View getView(int position, View cachedView, ViewGroup parent){
@@ -74,9 +78,10 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
                 list_score.setText(score.get(position).toString());
                 return view;
             }};
+        stats = new ListView(this);
         stats.setAdapter(adapter);
-        setContentView(stats);
         stats.setOnItemClickListener(this);
+        setContentView(stats);
 
     }
 
@@ -84,8 +89,8 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
     private static HashMap sortByValues(HashMap map) {
         List list = new LinkedList(map.entrySet());
         Collections.sort(list, new Comparator() {
-            public int compare(Object o2, Object o1) {
-                return ((Comparable) ((Map.Entry) (o2)).getValue()).compareTo(((Map.Entry) (o1)).getValue());
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
             }
         });
         HashMap sortedHashMap = new LinkedHashMap();

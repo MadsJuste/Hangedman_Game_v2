@@ -64,10 +64,12 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         name = getIntent().getStringExtra("name");
         language = getIntent().getStringExtra("langauge");
         Log.d("String", "langauge ="+language + " name ="+name);
-        if (language.equals("danish")) {
-            getWordDR();
+        if (language == null) {
+           Log.d("WHAT THE HELL", "WTH");
         }else if(language.equals("english")){
             getWordGuardian();
+        }else if(language.equals("danish")){
+            getWordDR();
         }
     }
 
@@ -76,6 +78,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     public void runGame(int i){
         String charecter;
         nummer = i;
+        Log.d("String", "langauge ="+language + " name ="+name);
         charecter = alfabet[nummer];
                 if (logic.getUsedLetter().contains(charecter)) {
                     tw.setText("you have already guessed on this letter");
@@ -217,6 +220,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
 
 
         }.execute();
+
     }
 
     public void getWordGuardian ()  {

@@ -21,19 +21,15 @@ public class Language_fragment extends AppCompatActivity implements View.OnClick
 
     private Button btnEn;
     private Button btnDk;
-    private TextView txttxt;
-    HangedmanLogic logic = new HangedmanLogic();
     String botPressed;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.language_choice);
-       // View view = inflater.inflate(R.layout.language_choice, container, false);
         Log.d("language_fragment", "fragmentet blev vist!");
         btnDk = (Button) findViewById(R.id.btnDk);
         btnDk.setOnClickListener(this);
         btnEn = (Button) findViewById(R.id.btnEn);
         btnEn.setOnClickListener(this);
-        txttxt = (TextView) findViewById(R.id.txttxt);
 
     }
 
