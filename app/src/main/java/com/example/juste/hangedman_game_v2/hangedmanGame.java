@@ -35,6 +35,8 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_hangedman_game);
+
+
         buttonA = (Button) findViewById(R.id.A);buttonB = (Button) findViewById(R.id.B);
         buttonC = (Button) findViewById(R.id.C);buttonD = (Button) findViewById(R.id.D);
         buttonE = (Button) findViewById(R.id.E);buttonF = (Button) findViewById(R.id.F);
@@ -56,6 +58,8 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonP.setOnClickListener(this); buttonQ.setOnClickListener(this);buttonR.setOnClickListener(this);buttonS.setOnClickListener(this);buttonT.setOnClickListener(this);
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
+
+
         guesses = (TextView) findViewById(R.id.LettersUsed);
         iw = (ImageView) findViewById(R.id.imageView2);
         tw = (TextView) findViewById(R.id.WordToGuess);
@@ -92,7 +96,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                     logic.minusPoints();
                 }
                 if (logic.isTheGameWon()) {
-                    tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points");
+                    tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points, please do continue");
                     logic.softReset();
                     logic.plusPoints();
                     guesses.setText("Letters Used: ");
