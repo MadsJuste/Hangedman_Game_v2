@@ -12,6 +12,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:weightSum="1">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="80dp"

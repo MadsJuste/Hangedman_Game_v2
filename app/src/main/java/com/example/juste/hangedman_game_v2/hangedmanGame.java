@@ -1,6 +1,5 @@
 package com.example.juste.hangedman_game_v2;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,12 +8,8 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
-
 import com.firebase.client.Firebase;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +22,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     private ImageView iw;
     private TextView tw ;
     private TextView guesses;
-    private HorizontalScrollView HSView;
-    private LinearLayout linearLayout;
+    private String name;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
@@ -36,6 +30,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_hangedman_game);
         buttonA = (Button) findViewById(R.id.A);buttonB = (Button) findViewById(R.id.B);
         buttonC = (Button) findViewById(R.id.C);buttonD = (Button) findViewById(R.id.D);
@@ -58,12 +53,13 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonP.setOnClickListener(this); buttonQ.setOnClickListener(this);buttonR.setOnClickListener(this);buttonS.setOnClickListener(this);buttonT.setOnClickListener(this);
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
-        myFBRef.child("Highscore").setValue("Score");
         guesses = (TextView) findViewById(R.id.LettersUsed);
         iw = (ImageView) findViewById(R.id.imageView2);
         tw = (TextView) findViewById(R.id.WordToGuess);
         tw.setText(logic.getVisableWord());
         iw.setImageResource(R.drawable.galge);
+        name = getIntent().getStringExtra("name");
+
 
 
 
@@ -89,9 +85,12 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
                 iw.setImageResource(R.drawable.galge);
             }
             if (logic.isTheGameLost()) {
-
-                Map<String, Object> highscore = new HashMap<String, Object>();
-                highscore.put("score", logic.getScore());
+                String push = ""+logic.getScore();
+                Map<String, String> highscore = new HashMap<String, String>();
+                highscore.put("score", push);
+                highscore.put("name", name);
+                myFBRef.push().setValue(highscore);
+                String postID = myFBRef.getKey();
                 Intent gameLost = new Intent(this, GameIsLostActivity.class);
                 gameLost.putExtra("word", logic.getWord());
                 gameLost.putExtra("score", logic.getScore());

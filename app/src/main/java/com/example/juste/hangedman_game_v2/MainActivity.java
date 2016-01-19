@@ -1,7 +1,6 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -10,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +16,7 @@ import android.widget.EditText;
 import com.example.juste.hangedman_game_v2.HangedmanLogic;
 import com.example.juste.hangedman_game_v2.R;
 import com.example.juste.hangedman_game_v2.hangedmanGame;
+
 import com.firebase.client.Firebase;
 
 
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     private Button user;
     private Button anon;
     private EditText userName;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         anon = (Button) findViewById(R.id.anonButton);
         anon.setOnClickListener(this);
         userName = (EditText) findViewById(R.id.Username);
+        name = "ERROR";
 
     }
 
@@ -63,13 +64,13 @@ public class MainActivity extends AppCompatActivity
 
     public void onClick(View v){
         if(v == user){
-            Firebase fbRef = new Firebase("https://hangedman-game.firebaseio.com/");
-            fbRef.child("User").setValue(userName.toString());
+            name = userName.getText().toString();
+            userName.setText("UserName Accepted, if you want to change it simply write it again");
         }else if (v == anon) {
-            Firebase fbRef = new Firebase("https://hangedman-game.firebaseio.com/");
-            fbRef.child("User").setValue("Anon");
+            name = "Anon";
+            userName.setText("User is Anonymous, if you want to change it simply write a name");
         }else{
-            System.out.println("ERROR");
+            name = "ERROR";
         }
     }
 
@@ -83,9 +84,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_playgame) {
-            startActivity(new Intent(this, hangedmanGame.class));
+            if(name.equals("ERROR")){
+                userName.setText("Please choose to make a user or play Anon");
+            }else{
+                Intent gameStart = new Intent(this, hangedmanGame.class);
+                gameStart.putExtra("name", name);
+                startActivity(gameStart);
+            }
+
         } else if (id == R.id.nav_highscore) {
-            startActivity(new Intent(this, StatsActivity.class));
+            Intent stats = new Intent(this, StatsActivity.class);
+            startActivity(stats);
         } else if (id == R.id.nav_language) {
 
         }
