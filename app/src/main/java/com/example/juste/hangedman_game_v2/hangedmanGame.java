@@ -1,5 +1,6 @@
 package com.example.juste.hangedman_game_v2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -18,25 +19,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class hangedmanGame extends AppCompatActivity implements View.OnClickListener{
+
+public class hangedmanGame extends AppCompatActivity implements View.OnClickListener, SensorEventListener{
 
     HangedmanLogic logic = new HangedmanLogic();
-
-
-
+    private SensorManager sensorMgr;
+    private Sensor sensor;
+    private SensorActivity sensorAc;
 
     private Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF,buttonG,buttonH, buttonI,buttonJ, buttonK, buttonL,
             buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT, buttonU, buttonV, buttonW, buttonX,
             buttonY, buttonZ, buttonÆ,buttonØ, buttonÅ;
-    private ImageView iw;
-    private TextView tw ;
+    private ImageView hangedmanImage;
+    private TextView wordToGuess;
     private TextView guesses;
     private String name;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
     String language = "none";
     long timer = -System.currentTimeMillis();
-
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
             "o","p", "q","r", "s","t", "u","v","w", "x","y", "z", "æ","ø", "å"};
     @Override
@@ -46,6 +47,19 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_hangedman_game);
 
 
+        //sensor setup
+        sensorMgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorAc = new SensorActivity();
+        sensorAc.setOnShakeListener(new SensorActivity.OnShakeListener() {
+            @Override
+            public void onShake(int count) {
+                handleShakeEvent(count);
+            }
+        });
+
+
+        //setup of bottons for the horizontal scrollview. thought about gallery list but Jacob said it was outdate.
         buttonA = (Button) findViewById(R.id.A);buttonB = (Button) findViewById(R.id.B);
         buttonC = (Button) findViewById(R.id.C);buttonD = (Button) findViewById(R.id.D);
         buttonE = (Button) findViewById(R.id.E);buttonF = (Button) findViewById(R.id.F);
@@ -68,12 +82,11 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
 
-
         guesses = (TextView) findViewById(R.id.LettersUsed);
-        iw = (ImageView) findViewById(R.id.imageView2);
-        tw = (TextView) findViewById(R.id.WordToGuess);
-        tw.setText(logic.getVisableWord());
-        iw.setImageResource(R.drawable.galge);
+        hangedmanImage = (ImageView) findViewById(R.id.imageView2);
+        wordToGuess = (TextView) findViewById(R.id.WordToGuess);
+        wordToGuess.setText(logic.getVisableWord());
+        hangedmanImage.setImageResource(R.drawable.galge);
         name = getIntent().getStringExtra("name");
         language = getIntent().getStringExtra("langauge");
         Log.d("String", "langauge ="+language + " name ="+name);
@@ -81,13 +94,19 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
            Log.d("WHAT THE HELL", "WTH");
         }else if(language.equals("english")){
             getWordGuardian();
-            tw.setText(logic.getVisableWord());
+            wordToGuess.setText(logic.getVisableWord());
         }else if(language.equals("danish")){
             getWordDR();
-            tw.setText(logic.getVisableWord());
+            wordToGuess.setText(logic.getVisableWord());
         }
     }
 
+    private void handleShakeEvent(int count) {
+        wordToGuess.setText("Game has been reset you had " +logic.getScore());
+        guesses.setText("Letters Used: ");
+        logic.refresh();
+
+    }
 
 
     public void runGame(int i){
@@ -96,20 +115,21 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         Log.d("String", "langauge ="+language + " name ="+name);
         charecter = alfabet[nummer];
                 if (logic.getUsedLetter().contains(charecter)) {
-                    tw.setText("you have already guessed on this letter");
+                    wordToGuess.setText("you have already guessed on this letter");
                 } else {
                 logic.guessLetter(charecter);
-                tw.setText(logic.getVisableWord());
+                wordToGuess.setText(logic.getVisableWord());
                 if (!logic.isLastLetterCorrect()) {
                     guesses.setText(guesses.getText() + " " + charecter);
                     logic.minusPoints();
                 }
                 if (logic.isTheGameWon()) {
-                    tw.setText("You have guessed the word: " + logic.getWord() + " and score 100 points, please do continue");
+                    wordToGuess.setText("You have guessed the word: " + logic.getWord() + " and score 100 points, please do continue");
+
                     logic.softReset();
                     logic.plusPoints();
                     guesses.setText("Letters Used: ");
-                    iw.setImageResource(R.drawable.galge);
+                    hangedmanImage.setImageResource(R.drawable.galge);
                 }
                 if (logic.isTheGameLost()) {
                     String push = "" + logic.getScore();
@@ -128,22 +148,22 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
             }
         switch(logic.getNumberOfWrongWords()) {
             case 1:
-                iw.setImageResource(R.drawable.forkert1);
+                hangedmanImage.setImageResource(R.drawable.forkert1);
                 break;
             case 2:
-                iw.setImageResource(R.drawable.forkert2);
+                hangedmanImage.setImageResource(R.drawable.forkert2);
                 break;
             case 3:
-                iw.setImageResource(R.drawable.forkert3);
+                hangedmanImage.setImageResource(R.drawable.forkert3);
                 break;
             case 4:
-                iw.setImageResource(R.drawable.forkert4);
+                hangedmanImage.setImageResource(R.drawable.forkert4);
                 break;
             case 5:
-                iw.setImageResource(R.drawable.forkert5);
+                hangedmanImage.setImageResource(R.drawable.forkert5);
                 break;
             case 6:
-                iw.setImageResource(R.drawable.forkert6);
+                hangedmanImage.setImageResource(R.drawable.forkert6);
                 break;
 
         }
@@ -263,5 +283,27 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         }.execute();
     }
 
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sensorMgr.registerListener(sensorAc, sensor,SensorManager.SENSOR_DELAY_UI);
+
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorMgr.unregisterListener(sensorAc);
+    }
 
 }

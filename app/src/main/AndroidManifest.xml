@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -42,6 +43,10 @@
         <activity
             android:name=".StatsActivity"
             android:label="HighScore"/>
+        <activity android:name=".SensorActivity"
+            android:label="Sensor">
+
+        </activity>
     </application>
 
 </manifest>

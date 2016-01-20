@@ -1,117 +1,79 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.app.Activity;
-import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
-import java.lang.UnsupportedOperationException;
-import android.util.Log;
-import android.widget.Toast;
+
 
 /**
  * Created by Konstantin on 19-01-2016.
  */
-public class SensorActivity implements SensorEventListener {
-    private static final int FORCE_THRESHOLD = 350;
-    private static final int TIME_THRESHOLD = 100;
-    private static final int SHAKE_TIMEOUT = 500;
-    private static final int SHAKE_DURATION = 1000;
-    private static final int SHAKE_COUNT = 3;
 
-    private SensorManager mSensorMgr;
-    private float mLastX=-1.0f, mLastY=-1.0f, mLastZ=-1.0f;
-    private long mLastTime;
-    private OnShakeListener mShakeListener;
-    private Context mContext;
-    private int mShakeCount = 0;
-    private long mLastShake;
-    private long mLastForce;
 
+public class SensorActivity extends Activity implements SensorEventListener {
+    private static final float shake_gravity = 2.7F;
+    private static final int shake_time = 500;
+    private static final int shake_reset_time = 3000;
+
+    private OnShakeListener shake_Listener;
+    private long shakeTime;
+    private int shakeCount;
+
+
+    public SensorActivity() {
+
+    }
+
+    public void setOnShakeListener(OnShakeListener listener) {
+        this.shake_Listener = listener;
+    }
+
+    public interface OnShakeListener {
+        public void onShake(int count);
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-    }
+        if (shake_Listener != null) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            float gX = x / SensorManager.GRAVITY_EARTH;
+            float gY = y / SensorManager.GRAVITY_EARTH;
+            float gZ = z / SensorManager.GRAVITY_EARTH;
 
-    }
 
-    public interface OnShakeListener
-    {
-        public void onShake();
-    }
+            float force = (float) Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
-    public SensorActivity(Context context)
-    {
-        mContext = context;
-        resume();
-    }
 
-    public void setOnShakeListener(OnShakeListener listener)
-    {
-        mShakeListener = listener;
-    }
+            if (force > shake_gravity) {
+                final long now = System.currentTimeMillis();
 
-    public void resume() {
-        mSensorMgr = (SensorManager)mContext.getSystemService(Context.SENSOR_SERVICE);
-        if (mSensorMgr == null) {
-            throw new UnsupportedOperationException("Sensors not supported");
-        }
-        boolean supported = mSensorMgr.registerListener((SensorListener) this, SensorManager.SENSOR_ACCELEROMETER, SensorManager.SENSOR_DELAY_GAME);
-        if (!supported) {
-            mSensorMgr.unregisterListener((SensorListener) this, SensorManager.SENSOR_ACCELEROMETER);
-            throw new UnsupportedOperationException("Accelerometer not supported");
-        }
-    }
-
-    public void pause() {
-        if (mSensorMgr != null) {
-            mSensorMgr.unregisterListener((SensorListener) this, SensorManager.SENSOR_ACCELEROMETER);
-            mSensorMgr = null;
-        }
-    }
-
-    public void onAccuracyChanged(int sensor, int accuracy) { }
-
-    public boolean onSensorChanged(int sensor, float[] values, SensorEvent event )
-    {
-        if (sensor != SensorManager.SENSOR_ACCELEROMETER) return false;
-        long now = System.currentTimeMillis();
-
-        if ((now - mLastForce) > SHAKE_TIMEOUT) {
-            mShakeCount = 0;
-        }
-
-        if ((now - mLastTime) > TIME_THRESHOLD) {
-            long diff = now - mLastTime;
-            float speed = Math.abs(values[SensorManager.DATA_X] + values[SensorManager.DATA_Y] + values[SensorManager.DATA_Z] - mLastX - mLastY - mLastZ) / diff * 10000;
-            if (speed > FORCE_THRESHOLD) {
-                if ((++mShakeCount >= SHAKE_COUNT) && (now - mLastShake > SHAKE_DURATION)) {
-                    mLastShake = now;
-                    mShakeCount = 0;
-                    if (mShakeListener != null) {
-                        mShakeListener.onShake();
-                    }
+                if (shakeTime + shake_time > now) {
+                    return;
                 }
-                mLastForce = now;
+
+
+                if (shakeTime + shake_reset_time < now) {
+                    shakeCount = 0;
+                }
+
+                shakeTime = now;
+                shakeCount++;
+
+                shake_Listener.onShake(shakeCount);
             }
-            mLastTime = now;
-            mLastX = values[SensorManager.DATA_X];
-            mLastY = values[SensorManager.DATA_Y];
-            mLastZ = values[SensorManager.DATA_Z];
+
+        }}
+
+        @Override
+        public void onAccuracyChanged (Sensor sensor,int accuracy){
+
         }
-return true;
     }
-    /* how imagin  for hangedmanGame class
-    SensorACtivity sensor = new  SensorActivity();
-    If (sensor.onSensorChanged =true) {
-        logic.refresh();
-        else {
-            runGame (int i).................... }
-    */
-}
+
+

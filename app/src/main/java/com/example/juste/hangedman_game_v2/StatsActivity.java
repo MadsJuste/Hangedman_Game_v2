@@ -1,7 +1,12 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.os.AsyncTaskCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +34,6 @@ import java.util.Map;
 
 
 public class StatsActivity extends Activity implements AdapterView.OnItemClickListener, Runnable{
-
     List<String> names;
     List<Integer> score;
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
@@ -39,8 +43,9 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
 
+        //FireBase
+        Firebase.setAndroidContext(this);
         myFBRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -86,11 +91,12 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
     }
 
 
+    //sort data from firebase
     private static HashMap sortByValues(HashMap map) {
         List list = new LinkedList(map.entrySet());
         Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
+            public int compare(Object person1, Object person2) {
+                return ((Comparable) ((Map.Entry) (person1)).getValue()).compareTo(((Map.Entry) (person2)).getValue());
             }
         });
         HashMap sortedHashMap = new LinkedHashMap();
@@ -104,7 +110,7 @@ public class StatsActivity extends Activity implements AdapterView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        //NA
     }
 
 

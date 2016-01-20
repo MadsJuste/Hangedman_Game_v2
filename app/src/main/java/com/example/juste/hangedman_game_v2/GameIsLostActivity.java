@@ -37,9 +37,6 @@ public class GameIsLostActivity extends hangedmanGame implements View.OnClickLis
             backToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(backToMain);
         }
-        else{
-            gameIsLostText.setText("WTF");
-        }
     }
 
 }
