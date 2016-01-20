@@ -1,6 +1,7 @@
 package com.example.juste.hangedman_game_v2;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener{
+public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener {
     private TextView gameIsLostText;
     private Button returnToMain;
     String word;
