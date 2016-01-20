@@ -10,7 +10,9 @@ import android.widget.TextView;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener {
+import com.example.juste.hangedman_game_v2.FragmentController.OnClickListener;
+
+public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener, FragmentController.OnClickListener{
     private TextView gameIsLostText;
     private Button returnToMain;
     String word;
