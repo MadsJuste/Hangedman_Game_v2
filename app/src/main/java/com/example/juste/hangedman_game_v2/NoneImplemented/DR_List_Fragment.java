@@ -1,4 +1,4 @@
-package com.example.juste.hangedman_game_v2;
+package com.example.juste.hangedman_game_v2.NoneImplemented;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -52,6 +52,7 @@ public class DR_List_Fragment extends Fragment {
         listView = (ListView) drFragmentView.findViewById(R.id.drlisteview);
         listView.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, drList));
+
         return drFragmentView;
     }
 

@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener, FragmentController.OnClickListener{
+public class GameIsLostActivity extends hangedmanGame implements View.OnClickListener{
     private TextView gameIsLostText;
     private Button returnToMain;
     String word;

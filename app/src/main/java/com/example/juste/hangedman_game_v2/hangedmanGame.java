@@ -108,7 +108,7 @@ public class hangedmanGame extends FragmentActivity implements View.OnClickListe
     }
 
     private void handleShakeEvent(int count) {
-        wordToGuess.setText("Game has been reset you had " + logic.getScore());
+        wordToGuess.setText("Game has been reset you had " + logic.getScore() + " points");
         guesses.setText("Letters Used: ");
         logic.refresh();
 
