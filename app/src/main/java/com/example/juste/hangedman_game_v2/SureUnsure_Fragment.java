@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class SureUnsure extends DialogFragment{
+public class SureUnsure_Fragment extends DialogFragment{
 
     LayoutInflater inflater;
     View v;
