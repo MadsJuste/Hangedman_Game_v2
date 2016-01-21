@@ -39,6 +39,9 @@
             android:name=".StatsActivity"
             android:label="HighScore" />
         <activity
+            android:name=".ListWords_Activity"
+            android:label="List" />
+        <activity
             android:name=".SensorActivity"
             android:label="Sensor" >
         </activity>

@@ -44,7 +44,8 @@ public class FragmentController extends ActionBarActivity implements Fragment_Ga
 
 
     public void lostGame() {
-         if(logic.isTheGameLost()){
+        if (logic.isTheGameLost()) {
+
             // Nulstiller spillet
             logic.refresh();
             usedLetters.clear();
@@ -56,31 +57,16 @@ public class FragmentController extends ActionBarActivity implements Fragment_Ga
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_game_lost, fragment_gamelost)
                     .commit();
-        }
 
-
-    }
-
-    @Override
-    public void onInfoActive(boolean aktiv) {
-        // Tænder og slukker for gameguess knap og tekstfelt
-        if(aktiv){
-
-            Fragment_GameInfo infoFragment = (Fragment_GameInfo)
-                    getSupportFragmentManager().findFragmentById(R.id.fragment_game_lost);
-
-
-        }
-        else{
-System.out.println ("WTF");
 
         }
     }
+
 
 
 
     // Henter listen af ord fra Galgelogik
-    public ArrayList<String> getDrWords(){
+    public ArrayList<String> getDrWords() {
         return logic.getpossibleWord();
     }
 
@@ -106,6 +92,24 @@ System.out.println ("WTF");
             }
         }.execute();
     }
+
+    @Override
+    public void onInfoActive(boolean aktiv) {
+        // Tænder og slukker for gameguess knap og tekstfelt
+        if(aktiv){
+
+            Fragment_GameInfo infoFragment = (Fragment_GameInfo)
+                    getSupportFragmentManager().findFragmentById(R.id.fragment_game_lost);
+
+
+        }
+        else{
+            System.out.println ("WTF");
+
+        }
+    }
+
+
 
 
     public interface OnClickListener {

@@ -28,4 +28,11 @@
         android:layout_alignParentStart="true"
         />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_game_lost"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ReturnToMain"
+        android:layout_alignParentStart="true"></FrameLayout>
+
 </RelativeLayout>
