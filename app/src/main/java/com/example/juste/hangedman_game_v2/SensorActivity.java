@@ -7,11 +7,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 
-/**
- * Created by Konstantin on 19-01-2016.
- */
-
-
 public class SensorActivity extends Activity implements SensorEventListener {
     private static final float shake_gravity = 2.7F;
     private static final int shake_time = 500;

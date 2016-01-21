@@ -19,13 +19,6 @@ public class HangedmanLogic {
     private boolean gameIsWon;
     private boolean gameIsLost;
     private int score;
-    public int gameWon=0;
-    public int  gameLost=0;
-    public int totalGame=0;
-    public int timePlay=0;
-
-   // hangedmanGame game = new hangedmanGame();
-
 
     public ArrayList<String> getUsedLetter() {
         return UsedLetter;
@@ -205,36 +198,5 @@ public class HangedmanLogic {
         refresh();
     }
 
-    public int WonStat() {
-        if (isTheGameWon()) {
-           gameWon++;
-        }
-        return gameWon;
-    }
-
-    public int LostStat() {
-        if (isTheGameLost()) {
-            gameLost++;
-        }
-        return gameLost;
-    }
-
-    public int TotalStat() {
-        if (isTheGameWon() || isTheGameLost()) {
-            totalGame=gameLost+gameWon;
-        }
-        return totalGame;
-    }
- //public int AverageTime() {
-  // int i= (int) game.timer/1000/TotalStat();
-   //        timePlay=i;
-  //  return timePlay;}
-
-    public void ResetStat (){
-        gameWon=0;
-        gameLost=0;
-        totalGame=0;
-        timePlay=0;
-    }
 
 }

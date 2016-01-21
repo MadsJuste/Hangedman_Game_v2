@@ -13,10 +13,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.juste.hangedman_game_v2.HangedmanLogic;
-import com.example.juste.hangedman_game_v2.R;
-import com.example.juste.hangedman_game_v2.hangedmanGame;
-
 import com.firebase.client.Firebase;
 
 
@@ -43,15 +39,22 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         user = (Button) findViewById(R.id.UserButton);
         user.setOnClickListener(this);
         anon = (Button) findViewById(R.id.anonButton);
         anon.setOnClickListener(this);
         userName = (EditText) findViewById(R.id.Username);
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v == userName){
+                    userName.setText("");
+                }
+            }
+        });
+
         name = "ERROR";
         langauge = getIntent().getStringExtra("message");
-
     }
 
     @Override
@@ -71,8 +74,6 @@ public class MainActivity extends AppCompatActivity
         }else if (v == anon) {
             name = "Anon";
             userName.setText("User is Anonymous, if you want to change it simply write a name");
-        }else{
-            name = "ERROR";
         }
     }
 
@@ -103,14 +104,8 @@ public class MainActivity extends AppCompatActivity
             Intent stats = new Intent(this, StatsActivity.class);
             startActivity(stats);
         } else if (id == R.id.nav_language) {
-            startActivity(new Intent(this, Language_fragment.class));
-        }/* else if (id==R.id.nav_list){
-            startActivity ( new Intent (this, DR_List_Fragment.class));
-        } else if (id == R.id.nav_manage) {
-            System.out.println("Not created");
-        } else if (id == R.id.nav_test) {
-            System.out.println( new Intent (this, Test_Activity.class));
-        }*/
+            startActivity(new Intent(this, LanguageActivity.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

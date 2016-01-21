@@ -82,6 +82,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
 
+
         guesses = (TextView) findViewById(R.id.LettersUsed);
         hangedmanImage = (ImageView) findViewById(R.id.imageView2);
         wordToGuess = (TextView) findViewById(R.id.WordToGuess);

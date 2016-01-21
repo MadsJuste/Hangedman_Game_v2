@@ -14,10 +14,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-/**
- * Created by Konstantin on 17-01-2016.
- */
-public class Language_fragment extends AppCompatActivity implements View.OnClickListener{
+
+public class LanguageActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnEn;
     private Button btnDk;

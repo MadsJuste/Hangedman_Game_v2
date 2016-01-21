@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -24,28 +23,22 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".hangedmanGame"
             android:label="g26 Galgeleg" />
         <activity
-            android:name=".Statistic_Activity"
-            android:label="@string/title_activity_stats"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".GameIsLostActivity" />
         <activity
-            android:name=".Language_fragment"
+            android:name=".LanguageActivity"
             android:label="Language Choice" />
-        <activity
-            android:name=".Test_Activity"
-            android:label="Test" />
         <activity
             android:name=".StatsActivity"
             android:label="HighScore"/>
-        <activity android:name=".SensorActivity"
+        <activity
+            android:name=".SensorActivity"
             android:label="Sensor">
-
         </activity>
     </application>
 
