@@ -21,17 +21,16 @@
         android:id="@+id/WordToGuess"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/imageView2" />
+        android:layout_alignEnd="@+id/LettersUsed" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Letters Used: "
         android:id="@+id/LettersUsed"
+        android:layout_below="@+id/saveandquit"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/imageView2"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_above="@+id/WordToGuess" />
+        android:layout_toStartOf="@+id/imageView2" />
 
     <ImageView
         android:layout_width="300dp"
@@ -205,5 +204,15 @@
                 android:text = "Å"/>
         </LinearLayout>
     </HorizontalScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save and quit"
+        android:id="@+id/saveandquit"
+        android:onClick="Leave"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageView2" />
 
 </RelativeLayout>
