@@ -1,6 +1,5 @@
 package com.example.juste.hangedman_game_v2;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -21,7 +20,7 @@ import java.util.Map;
 
 
 
-public class hangedmanGame extends FragmentActivity implements View.OnClickListener, SensorEventListener, SureUnsure.SureUnsureListenerDone{
+public class hangedmanGame extends FragmentActivity implements View.OnClickListener, SensorEventListener, SureUnsure_Fragment.SureUnsureListenerDone{
 
     HangedmanLogic logic = new HangedmanLogic();
     private SensorManager sensorMgr;
@@ -103,7 +102,7 @@ public class hangedmanGame extends FragmentActivity implements View.OnClickListe
         }
     }
     public void Leave(View v){
-        SureUnsure su = new SureUnsure();
+        SureUnsure_Fragment su = new SureUnsure_Fragment();
         su.show(getFragmentManager(),"sureUnsure");
 
     }

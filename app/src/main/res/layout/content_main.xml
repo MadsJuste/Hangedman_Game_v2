@@ -34,7 +34,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Play Anonymous"
+                android:text="Choose anonymous"
                 android:id="@+id/anonButton"
                 android:layout_below="@+id/UserButton"
                 android:layout_alignParentStart="true" />
