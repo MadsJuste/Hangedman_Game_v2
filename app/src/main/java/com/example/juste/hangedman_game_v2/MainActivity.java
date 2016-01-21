@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private String name;
     private String langauge;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_language) {
             startActivity(new Intent(this, LanguageActivity.class));
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

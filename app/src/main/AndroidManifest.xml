@@ -7,7 +7,10 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -21,24 +24,23 @@
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".hangedmanGame"
             android:label="g26 Galgeleg" />
-        <activity
-            android:name=".GameIsLostActivity" />
+        <activity android:name=".GameIsLostActivity" />
         <activity
             android:name=".LanguageActivity"
             android:label="Language Choice" />
         <activity
             android:name=".StatsActivity"
-            android:label="HighScore"/>
+            android:label="HighScore" />
         <activity
             android:name=".SensorActivity"
-            android:label="Sensor">
+            android:label="Sensor" >
         </activity>
     </application>
 

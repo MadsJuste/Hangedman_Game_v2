@@ -1,5 +1,6 @@
 package com.example.juste.hangedman_game_v2;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -7,7 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +21,13 @@ import java.util.Map;
 
 
 
-public class hangedmanGame extends AppCompatActivity implements View.OnClickListener, SensorEventListener{
+public class hangedmanGame extends FragmentActivity implements View.OnClickListener, SensorEventListener, SureUnsure.SureUnsureListenerDone{
 
     HangedmanLogic logic = new HangedmanLogic();
     private SensorManager sensorMgr;
     private Sensor sensor;
     private SensorActivity sensorAc;
+
 
     private Button buttonA, buttonB, buttonC, buttonD, buttonE, buttonF,buttonG,buttonH, buttonI,buttonJ, buttonK, buttonL,
             buttonM, buttonN, buttonO, buttonP, buttonQ, buttonR, buttonS, buttonT, buttonU, buttonV, buttonW, buttonX,
@@ -37,9 +39,9 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
     Firebase myFBRef = new Firebase("https://hangedman-game.firebaseio.com/");
     int nummer;
     String language = "none";
-    long timer = -System.currentTimeMillis();
     String[] alfabet = {"a", "b", "c","d", "e","f", "g","h", "i","j", "k","l", "m","n",
             "o","p", "q","r", "s","t", "u","v","w", "x","y", "z", "æ","ø", "å"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +84,8 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         buttonU.setOnClickListener(this);buttonV.setOnClickListener(this);buttonW.setOnClickListener(this);buttonX.setOnClickListener(this);buttonY.setOnClickListener(this);
         buttonZ.setOnClickListener(this); buttonÆ.setOnClickListener(this);buttonØ.setOnClickListener(this); buttonÅ.setOnClickListener(this);
 
-
-        guesses = (TextView) findViewById(R.id.LettersUsed);
         hangedmanImage = (ImageView) findViewById(R.id.imageView2);
+        guesses = (TextView) findViewById(R.id.LettersUsed);
         wordToGuess = (TextView) findViewById(R.id.WordToGuess);
         wordToGuess.setText(logic.getVisableWord());
         hangedmanImage.setImageResource(R.drawable.galge);
@@ -92,7 +93,7 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         language = getIntent().getStringExtra("langauge");
         Log.d("String", "langauge ="+language + " name ="+name);
         if (language == null) {
-           Log.d("WHAT THE HELL", "WTH");
+            //If language is null the game will continue with the words stored in the Hangedman Logic.
         }else if(language.equals("english")){
             getWordGuardian();
             wordToGuess.setText(logic.getVisableWord());
@@ -101,52 +102,53 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
             wordToGuess.setText(logic.getVisableWord());
         }
     }
+    public void Leave(View v){
+        SureUnsure su = new SureUnsure();
+        su.show(getFragmentManager(),"sureUnsure");
+
+    }
 
     private void handleShakeEvent(int count) {
-        wordToGuess.setText("Game has been reset you had " +logic.getScore());
+        wordToGuess.setText("Game has been reset you had " + logic.getScore());
         guesses.setText("Letters Used: ");
         logic.refresh();
 
     }
 
 
+
+
     public void runGame(int i){
         String charecter;
         nummer = i;
-        Log.d("String", "langauge ="+language + " name ="+name);
+        Log.d("String", "langauge =" + language + " name =" + name);
         charecter = alfabet[nummer];
-                if (logic.getUsedLetter().contains(charecter)) {
-                    wordToGuess.setText("you have already guessed on this letter");
-                } else {
-                logic.guessLetter(charecter);
-                wordToGuess.setText(logic.getVisableWord());
-                if (!logic.isLastLetterCorrect()) {
-                    guesses.setText(guesses.getText() + " " + charecter);
-                    logic.minusPoints();
-                }
-                if (logic.isTheGameWon()) {
-                    wordToGuess.setText("You have guessed the word: " + logic.getWord() + " and score 100 points, please do continue");
-
-                    logic.softReset();
-                    logic.plusPoints();
-                    guesses.setText("Letters Used: ");
-                    hangedmanImage.setImageResource(R.drawable.galge);
-                }
-                if (logic.isTheGameLost()) {
-                    String push = "" + logic.getScore();
-                    Map<String, String> highscore = new HashMap<>();
-                    highscore.put("score", push);
-                    highscore.put("name", name);
-                    myFBRef.push().setValue(highscore);
-                    Intent gameLost = new Intent(this, GameIsLostActivity.class);
-                    gameLost.putExtra("word", logic.getWord());
-                    gameLost.putExtra("score", logic.getScore());
-                    startActivity(gameLost);
-                }
-                logic.logStatus();
-                /*timer += System.currentTimeMillis();
-                System.out.println("hangedGame.runGame() " + timer);*/
+        if (logic.getUsedLetter().contains(charecter)) {
+            wordToGuess.setText("you have already guessed on this letter");
+        } else {
+            logic.guessLetter(charecter);
+            wordToGuess.setText(logic.getVisableWord());
+            if (!logic.isLastLetterCorrect()) {
+                guesses.setText(guesses.getText() + " " + charecter);
+                logic.minusPoints();
             }
+            if (logic.isTheGameWon()) {
+                wordToGuess.setText("You have guessed the word: " + logic.getWord() + " and score 100 points, please do continue");
+                logic.softReset();
+                logic.plusPoints();
+                guesses.setText("Letters Used: ");
+                hangedmanImage.setImageResource(R.drawable.galge);
+            }
+            if (logic.isTheGameLost()) {
+                pushToFB();
+                Intent gameLost = new Intent(this, GameIsLostActivity.class);
+                gameLost.putExtra("word", logic.getWord());
+                gameLost.putExtra("score", logic.getScore());
+                startActivity(gameLost);
+            }
+            logic.logStatus();
+
+        }
         switch(logic.getNumberOfWrongWords()) {
             case 1:
                 hangedmanImage.setImageResource(R.drawable.forkert1);
@@ -234,6 +236,13 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public void pushToFB(){
+        String push = "" + logic.getScore();
+        Map<String, String> highscore = new HashMap<>();
+        highscore.put("score", push);
+        highscore.put("name", name);
+        myFBRef.push().setValue(highscore);
+    }
 
     public void getWordDR ()  {
         new AsyncTask() {
@@ -307,4 +316,12 @@ public class hangedmanGame extends AppCompatActivity implements View.OnClickList
         sensorMgr.unregisterListener(sensorAc);
     }
 
+    @Override
+    public void onComplete(String word) {
+        if(word.equals("Yes")){
+            pushToFB();
+            onBackPressed();
+        }
+        //if the word isn't equal to yes then the program return to the game
+    }
 }
