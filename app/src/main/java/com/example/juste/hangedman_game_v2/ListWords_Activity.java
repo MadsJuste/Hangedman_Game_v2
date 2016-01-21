@@ -23,12 +23,12 @@ import java.io.PrintWriter;
 public class ListWords_Activity extends ActionBarActivity implements DR_List_Fragment.OnDRListener{
 
     DR_List_Fragment fragment;
-
+    HangedmanLogic logic = new HangedmanLogic();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
         fragment = (DR_List_Fragment) getSupportFragmentManager()
                 .findFragmentById(R.id.drlisteview);
     }
@@ -38,6 +38,8 @@ public class ListWords_Activity extends ActionBarActivity implements DR_List_Fra
 
     @Override
     public void onDRListener() {
-       ???????????????????
+        DR_List_Fragment drFragment = (DR_List_Fragment)
+                getSupportFragmentManager().findFragmentById(R.id.drlisteview);
+        drFragment.populateDrList(logic.getpossibleWord());
         }
 }
